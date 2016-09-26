@@ -1,0 +1,129 @@
+﻿@{
+ 
+}
+<div ng-app="MyApp">
+    <div class="container" ng-controller="indexController as IndexVm">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Birth Date
+                    </th>
+                    <th>
+                        Salary
+                    </th>
+                    <th>
+                        Date Hired
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in IndexVm.items.ValidData">
+                    <td>
+                        {{record.EmployeeName}}
+                    </td>
+                    <td>
+                        {{record.BirthDate | date : "dd/MM/y" }}
+                    </td>
+                    <td>
+                        {{record.Salary | currency}}
+                    </td>
+                    <td>
+                        {{record.DateHired | date : "dd/MM/y"}}
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <!-- Invalid Rows-->
+
+        <h1>Invalid Records</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Birth Date
+                    </th>
+                    <th>
+                        Salary
+                    </th>
+                    <th>
+                        Date Hired
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in IndexVm.items.InvalidData">
+                    <td>
+                        {{record.EmployeeName}}
+                    </td>
+                    <td ng-if="record.isBirthDateValid">
+                        {{record.BirthDate | date : "dd/MM/y" }}
+                    </td>
+                    <td>
+                        {{record.Salary | currency}}
+                    </td>
+                    <td>
+                        {{record.DateHired | date : "dd/MM/y"}}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script type="text/javascript">
+    (function () {
+        "use strict";
+        angular.module("MyApp", [])
+            .controller("indexController", IndexController);
+
+        IndexController.$inject = ["$scope"];
+
+        function IndexController($scope) {
+            var vm = this;
+            vm.$scope = $scope;
+            vm.items = null;
+            vm.test = "Angular is working";
+            EmployeeData(onSuccess, onError);
+
+            function EmployeeData(onSuccess, onError) {
+                var url = "api/employees";
+                var settings = {
+                    cache: false,
+                    type: "GET",
+                    dataType: "json",
+                    success: onSuccess,
+                    error: onError
+                }
+                $.ajax(url, settings);
+            }
+
+            function onSuccess(data) {
+                vm.items = data;
+                console.log(vm.items)
+
+               
+                vm.$scope.$apply(
+                    vm.items
+                    );
+               
+            }
+
+            function onError() {
+                console.log("failed");
+            }
+        }
+    })();
+</script>
+
+
+    }
