@@ -20,6 +20,8 @@ namespace LaceraWebApp.Controllers.Api
                 EmployeeData empData = new EmployeeData();
                 List<EmployeeRecord> invalidRecords;
                 List<Employee> data = CsvParser.Parse(@"C:\Users\adolf\Desktop\LaceraTest.csv", out invalidRecords);
+
+
                 empData.InvalidData = invalidRecords;
                 empData.ValidData = data;
                 
