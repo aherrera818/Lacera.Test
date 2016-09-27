@@ -7,18 +7,20 @@ using Microsoft.VisualBasic.FileIO;
 using LaceraParser;
 using System.Collections.ObjectModel;
 using Microsoft.VisualBasic;
+using System.IO;
 
 namespace LaceraParser
 {
-    public class CsvParser
+    public static class CsvParser
     {
         
         public static  List<Employee> Parse(string file, out List<EmployeeRecord> invalidRecords) {
 
             List<Employee> employeeCollection = null;
             invalidRecords = null;
-
-            using (TextFieldParser parser = new TextFieldParser(file))
+            
+            using (
+                TextFieldParser parser = new TextFieldParser(file))
             { 
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
