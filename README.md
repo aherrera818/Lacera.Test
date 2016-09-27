@@ -5,10 +5,15 @@ public Employee {
       Has Main properties of an Employee.
       Name, dob , salary, etc
     }
+    
+    
+    
 public EmployeeRecord : Employee {
       The EmployeeRecord inherits from the Employee class, but has some additional properties, those being some validation booleans,
       I made a child class for the Employee class , only to make things a little more neat.
 }
+
+
 
 public static CsvParser {
       A container to hold my "Parser" method. 
