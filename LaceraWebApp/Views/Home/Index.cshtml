@@ -3,7 +3,8 @@
 }
 <div ng-app="MyApp">
     <div class="container" ng-controller="indexController as IndexVm">
-        <table class="table table-striped">
+        <h1>Valid Records</h1>
+         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>
@@ -63,7 +64,7 @@
                     <td>
                         {{record.EmployeeName}}
                     </td>
-                    <td ng-if="record.isBirthDateValid">
+                    <td>
                         {{record.BirthDate | date : "dd/MM/y" }}
                     </td>
                     <td>
@@ -110,8 +111,8 @@
             function onSuccess(data) {
                 vm.items = data;
                 console.log(vm.items)
-
-               
+                stringParser(vm.items.ValidData);
+                stringParser(vm.items.InvalidData);
                 vm.$scope.$apply(
                     vm.items
                     );
@@ -120,6 +121,12 @@
 
             function onError() {
                 console.log("failed");
+            }
+            function stringParser(array) {
+                for (var i = 0; i < array.length; i++) {
+                    array[i].EmployeeName = array[i].EmployeeName.replace(/['"]+/g, '');
+                }
+                console.log(array);
             }
         }
     })();
